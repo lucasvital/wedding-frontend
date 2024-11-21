@@ -194,6 +194,10 @@
   .cart-modal {
     width: 100%; /* A modal de carrinho ocupa toda a largura da tela */
     height: 100vh; /* Modal ocupa toda a altura da tela */
+    position: absolute; /* Ajusta a posição */
+    top: 0; /* Ajusta a posição do topo */
+    right: 0;
+    left: 0;
   }
 
   .logout-button {
