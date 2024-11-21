@@ -23,15 +23,15 @@ const LoginPage: React.FC = () => {
       if (response.data.token) {
         localStorage.setItem("authToken", response.data.token); // Armazena o token
         localStorage.setItem("user", JSON.stringify(response.data.user)); // Armazena os dados do usuário, incluindo o ID
-  
-        // Redireciona para a página de produtos após o login bem-sucedido
-        navigate("/products");
-  
         // Mostra uma notificação de sucesso
         toast.success("Login realizado com sucesso!", {
           position: "top-right",
           autoClose: 3000,
         });
+        // Redireciona para a página de produtos após o login bem-sucedido
+        navigate("/products");
+  
+        
       }
     } catch (err: any) {
       // Se ocorrer um erro, exibe a mensagem de erro
