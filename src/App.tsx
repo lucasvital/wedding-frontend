@@ -1,26 +1,32 @@
-// App.tsx
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom"; // Não importa o Router aqui
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-// import Header from "./components/Header";
 import GlobalStyle from "./styles/GlobalStyle";
 import ProductPage from './pages/ProductPage'; // Importe o componente que criamos
 import AddProductPage from "./pages/AddProductPage";  // Nova página de cadastro
 
 const App: React.FC = () => {
   const isAuthenticated = !!localStorage.getItem("authToken");
+
   return (
     <>
       <GlobalStyle />
-      {/* <Header /> */}
       <Routes>
+        {/* Rota inicial, redireciona para login se não estiver autenticado */}
+        <Route path="/" element={isAuthenticated ? <Navigate to="/products" /> : <Navigate to="/login" />} />
+        
+        {/* Rota de login */}
         <Route path="/login" element={<LoginPage />} />
+        
+        {/* Rota de registro */}
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/products" element={<ProductPage />} />  {/* Corrigido */}
-        <Route path="/add-product" element={isAuthenticated ? <AddProductPage /> : <Navigate to="/" />} /> {/* Rota de cadastrar produto */}
-
-        {/* <Route path="*" element={<div>Page Not Found</div>} /> */}
+        
+        {/* Rota de produtos */}
+        <Route path="/products" element={<ProductPage />} /> 
+        
+        {/* Rota de cadastro de produto, protegida por autenticação */}
+        <Route path="/add-product" element={isAuthenticated ? <AddProductPage /> : <Navigate to="/login" />} />
       </Routes>
     </>
   );
