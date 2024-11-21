@@ -56,7 +56,7 @@ const AddProductPage: React.FC = () => {
       }
 
       const response = await axios.post(
-        "http://localhost:3001/api/products",
+        `${process.env.REACT_APP_BACKEND_URL}/api/products`,
         { name, image },
         {
           headers: {
@@ -92,7 +92,7 @@ const AddProductPage: React.FC = () => {
 
             // Chama a API para criar o produto
             await axios.post(
-              "http://localhost:3001/api/products",
+              `${process.env.REACT_APP_BACKEND_URL}/api/products`,
               { name, image },
               {
                 headers: {

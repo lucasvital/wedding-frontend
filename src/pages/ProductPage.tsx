@@ -39,7 +39,7 @@ const ProductPage: React.FC = () => {
     const fetchProducts = async () => {
       try {
         // Busca todos os produtos disponíveis
-        const response: AxiosResponse<Product[]> = await axios.get("http://localhost:3001/api/products");
+        const response: AxiosResponse<Product[]> = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/products`);
         const availableProducts = response.data.filter(product => !product.reserved);
         setProducts(availableProducts);
 
@@ -47,7 +47,7 @@ const ProductPage: React.FC = () => {
         const token = localStorage.getItem("authToken");
         if (token && user.id) {
           const reservedResponse = await axios.get(
-            `http://localhost:3001/api/products/reserved/${user.id}`, 
+            `${process.env.REACT_APP_BACKEND_URL}/api/products/reserved/${user.id}`, 
             { headers: { Authorization: `Bearer ${token}` } }
           );
           setReservedItems(reservedResponse.data);  // Atualiza o estado com os produtos reservados
@@ -79,7 +79,7 @@ const ProductPage: React.FC = () => {
       console.log("Product ID:", productId, "User ID:", user.id); 
 
       const response = await axios.post(
-        `http://localhost:3001/api/products/reserve`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/products/reserve`,
         { productId, userId: user.id },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -116,7 +116,7 @@ const ProductPage: React.FC = () => {
       }
   
       // Envia a requisição para remover a reserva
-      const response = await axios.post('http://localhost:3001/api/products/unreserve', {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/products/unreserve`, {
         productId: productId,
         userId: user.id, // Passa o userId corretamente
       });

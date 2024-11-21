@@ -15,7 +15,7 @@ const RegisterPage: React.FC = () => {
   const handleRegister = async (email: string, password: string, name?: string, phone?: string) => {
     try {
       // Envia a requisição para o backend
-      const response = await axios.post("http://localhost:3001/api/users/register", {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/users/register`, {
         email,
         password,
         name,

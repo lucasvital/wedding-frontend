@@ -14,10 +14,10 @@ const LoginPage: React.FC = () => {
   const handleLogin = async (email: string, password: string) => {
     try {
       // Envia a requisição para o backend
-      const response = await axios.post("http://localhost:3001/api/users/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/users/login`, // Usa a variável de ambiente para a URL
+        { email, password }
+      );
   
       // Se a resposta contiver um token e os dados do usuário, armazene-os no localStorage
       if (response.data.token) {
