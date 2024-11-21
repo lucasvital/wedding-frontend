@@ -37,19 +37,6 @@
   gap: 10px; /* Espaçamento entre o ícone e o texto */
 }
 
-/* Ícone do carrinho */
-.cart-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #ddd; /* Cor de fundo padrão */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 16px;
-  color: #666;
-}
-
 /* Botão de logout */
 .logout-button {
   background-color: #ff4d4d;
@@ -178,4 +165,61 @@
 
 .reserved-item button:hover {
   background-color: #e60000;
+}
+
+/* Estilização responsiva para telas pequenas (Celulares) */
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: 1fr; /* Exibe os produtos em uma coluna */
+    gap: 15px; /* Reduz o espaçamento entre os itens */
+  }
+
+  .product-item {
+    height: auto; /* Permite que os itens de produto se ajustem ao conteúdo */
+  }
+
+  .product-item img {
+    height: 150px; /* Ajusta a altura das imagens */
+  }
+
+  .header {
+    height: 50px; /* Menor altura para o cabeçalho */
+    padding: 10px;
+  }
+
+  .header-items {
+    gap: 15px; /* Diminui o espaçamento entre os ícones */
+  }
+
+  .cart-modal {
+    width: 100%; /* A modal de carrinho ocupa toda a largura da tela */
+    height: 100vh; /* Modal ocupa toda a altura da tela */
+  }
+
+  .logout-button {
+    font-size: 12px; /* Reduz o tamanho da fonte para telas pequenas */
+    padding: 6px 10px; /* Ajusta o padding do botão */
+  }
+
+  .cart-modal h2 {
+    font-size: 20px; /* Diminui o tamanho do título */
+  }
+
+  .reserved-item {
+    flex-direction: column; /* Exibe os itens reservados em coluna para melhor adaptação */
+    align-items: flex-start; /* Alinha os itens à esquerda */
+  }
+
+  .reserved-item img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .reserved-item h3 {
+    font-size: 14px; /* Ajusta o tamanho da fonte para telas pequenas */
+  }
+
+  .product-item h2 {
+    font-size: 16px; /* Ajusta o tamanho da fonte para melhor leitura em dispositivos móveis */
+  }
 }
