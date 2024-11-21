@@ -1,0 +1,181 @@
+/* Estilização para a página de produtos */
+.product-page {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 80px; /* Adiciona espaço para o cabeçalho fixo */
+}
+
+/* Cabeçalho */
+.header {
+  display: flex;
+  justify-content: flex-end; /* Move os itens para o lado direito */
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+  box-sizing: border-box;
+  position: fixed; /* Fixa o cabeçalho no topo */
+  top: 0;
+  z-index: 1000;
+  height: 60px; /* Define uma altura fixa para o cabeçalho */
+}
+
+/* Container para os itens do cabeçalho */
+.header-items {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Espaçamento menor entre o carrinho e logout */
+}
+
+/* Carrinho */
+.cart {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espaçamento entre o ícone e o texto */
+}
+
+/* Ícone do carrinho */
+.cart-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ddd; /* Cor de fundo padrão */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: #666;
+}
+
+/* Botão de logout */
+.logout-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+  background-color: #e60000;
+}
+
+/* Contêiner da grade */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 colunas de tamanho igual */
+  gap: 20px; /* Espaçamento entre os itens */
+  max-width: 1200px;
+  width: 100%;
+}
+
+/* Garantir que o botão esteja alinhado corretamente com o conteúdo */
+.product-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Espalha o conteúdo, garantindo que o botão fique alinhado ao final */
+  height: 300px; /* Define uma altura fixa para o item de produto */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Alinhar as imagens no centro do contêiner */
+.product-item img {
+  max-width: 100%; /* Faz com que a imagem ocupe toda a largura do contêiner */
+  height: 200px; /* Definir uma altura fixa para todas as imagens */
+  object-fit: cover; /* Garantir que a imagem cubra o espaço sem distorcer a proporção */
+  border-radius: 4px;
+  margin-bottom: 10px;
+  display: block; /* Garantir que o comportamento de bloco permita centralizar */
+  margin-left: auto;  /* Alinha a imagem à esquerda */
+  margin-right: auto; /* Alinha a imagem à direita, centralizando */
+}
+
+.product-item h2 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.product-item button {
+  margin-top: auto; /* Faz o botão se alinhar no final do item */
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.product-item button:hover {
+  background-color: #0056b3;
+}
+
+/* Estilização do carrinho de itens reservados */
+.cart-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 300px;
+  background-color: #fff;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  z-index: 1000;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.cart-modal h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.reserved-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.reserved-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.reserved-item img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.reserved-item h3 {
+  font-size: 16px;
+  flex-grow: 1;
+}
+
+.reserved-item button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.reserved-item button:hover {
+  background-color: #e60000;
+}
