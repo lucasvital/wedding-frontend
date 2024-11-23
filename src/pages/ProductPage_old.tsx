@@ -21,58 +21,45 @@ const ProductPage: React.FC = () => {
   const [reservedItems, setReservedItems] = useState<Product[]>([]);
   const [userName, setUserName] = useState<string>("");
   const [isSuperAdmin, setIsSuperAdmin] = useState<boolean>(false);
-  const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
+  const [isCartOpen, setIsCartOpen] = useState<boolean>(false); 
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Verificar se o token e o usuário estão disponíveis
-    const token = localStorage.getItem("authToken");
-    const user = localStorage.getItem("user");
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
 
-    if (!token || !user) {
-      // Se não estiver autenticado, redirecionar para a página de login
-      alert("Você não está logado. Redirecionando para a página de login...");
-      navigate("/login");
-      return;
-    }
-
-    const parsedUser = JSON.parse(user);
-
-    if (parsedUser.role === "superadmin") {
+    if (user.role === "superadmin") {
       setIsSuperAdmin(true);
     }
 
-    if (parsedUser.name) {
-      setUserName(parsedUser.name);
+    if (user.name) {
+      setUserName(user.name);
     }
 
     const fetchProducts = async () => {
       try {
         // Busca todos os produtos disponíveis
-        const response: AxiosResponse<Product[]> = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/api/products`
-        );
-        const availableProducts = response.data.filter(
-          (product) => !product.reserved
-        );
+        const response: AxiosResponse<Product[]> = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/products`);
+        const availableProducts = response.data.filter(product => !product.reserved);
         setProducts(availableProducts);
 
-        // Busca as reservas do usuário diretamente do backend
-        if (token && parsedUser.id) {
+        // Agora, busca as reservas do usuário diretamente do backend
+        const token = localStorage.getItem("authToken");
+        if (token && user.id) {
           const reservedResponse = await axios.get(
-            `${process.env.REACT_APP_BACKEND_URL}/api/products/reserved/${parsedUser.id}`,
+            `${process.env.REACT_APP_BACKEND_URL}/api/products/reserved/${user.id}`, 
             { headers: { Authorization: `Bearer ${token}` } }
           );
-          setReservedItems(reservedResponse.data); // Atualiza o estado com os produtos reservados
+          setReservedItems(reservedResponse.data);  // Atualiza o estado com os produtos reservados
         }
+
       } catch (error) {
         console.error("Erro ao buscar produtos ou reservas:", error);
       }
     };
 
     fetchProducts();
-  }, [navigate]);
+  }, []);
 
   const handleAddProduct = () => {
     navigate("/add-product");
@@ -88,6 +75,9 @@ const ProductPage: React.FC = () => {
         return;
       }
 
+      console.log("Enviando requisição para reservar produto...");
+      console.log("Product ID:", productId, "User ID:", user.id); 
+
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/products/reserve`,
         { productId, userId: user.id },
@@ -96,12 +86,13 @@ const ProductPage: React.FC = () => {
 
       // Atualizando os estados após a reserva
       setProducts((prevProducts) =>
-        prevProducts.filter((product) => product.id !== productId)
+        prevProducts.filter((product) => product.id !== productId) // Remove o produto da lista de disponíveis
       );
       setReservedItems((prevReservedItems) => [
         ...prevReservedItems,
-        response.data.product,
+        response.data.product, // Adiciona o produto reservado
       ]);
+      
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         console.error("Erro ao reservar produto:", error.response ? error.response.data : error.message);
@@ -113,28 +104,37 @@ const ProductPage: React.FC = () => {
 
   const handleRemoveFromCart = async (productId: number) => {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
-
+  
     if (!user || !user.id) {
-      console.error("Usuário não autenticado ou sem ID.");
+      console.error('Usuário não autenticado ou sem ID.');
       return;
     }
-
+  
     try {
+      if (!productId) {
+        throw new Error('Faltando parâmetros necessários.');
+      }
+  
+      // Envia a requisição para remover a reserva
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/products/unreserve`, {
         productId: productId,
-        userId: user.id,
+        userId: user.id, // Passa o userId corretamente
       });
-
+  
+      console.log('Produto removido com sucesso:', response.data);
+  
+      // Atualiza os estados após remover a reserva
       setReservedItems((prevReservedItems) =>
-        prevReservedItems.filter((item) => item.id !== productId)
+        prevReservedItems.filter((item) => item.id !== productId) // Remove o produto da lista de itens reservados
       );
-
+  
+      // Re-adiciona o produto à lista de produtos disponíveis
       setProducts((prevProducts) => [
         ...prevProducts,
-        response.data.product,
+        response.data.product, // Produto removido da reserva
       ]);
     } catch (error: any) {
-      console.error("Erro ao remover produto do carrinho:", error.response?.data || error.message);
+      console.error('Erro ao remover produto do carrinho:', error.response?.data || error.message);
     }
   };
 
