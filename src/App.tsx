@@ -4,6 +4,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import GlobalStyle from "./styles/GlobalStyle";
 import ProductPage from './pages/ProductPage'; // Importe o componente que criamos
+import DashboardPage from "./components/DashboardPage";
 import AddProductPage from "./pages/AddProductPage";  // Nova página de cadastro
 
 const App: React.FC = () => {
@@ -24,7 +25,8 @@ const App: React.FC = () => {
         
         {/* Rota de produtos */}
         <Route path="/products" element={<ProductPage />} /> 
-        
+        <Route path="/dashboard" element={<DashboardPage />} />
+
         {/* Rota de cadastro de produto, protegida por autenticação */}
         <Route path="/add-product" element={isAuthenticated ? <AddProductPage /> : <Navigate to="/login" />} />
       </Routes>
