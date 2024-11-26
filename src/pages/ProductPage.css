@@ -63,6 +63,7 @@
 }
 
 /* Garantir que o botão esteja alinhado corretamente com o conteúdo */
+/* Garantir que o botão esteja alinhado corretamente com o conteúdo */
 .product-item {
   display: flex;
   flex-direction: column;
@@ -74,6 +75,13 @@
   text-align: center;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transição suave para a div inteira */
+}
+
+/* Efeito de hover na div do produto */
+.product-item:hover {
+  transform: scale(1.05); /* Aumenta a div suavemente */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adiciona sombra ao redor da div */
 }
 
 /* Alinhar as imagens no centro do contêiner */
@@ -87,6 +95,7 @@
   margin-left: auto;  /* Alinha a imagem à esquerda */
   margin-right: auto; /* Alinha a imagem à direita, centralizando */
 }
+
 
 .product-item h2 {
   font-size: 18px;
